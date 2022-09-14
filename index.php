@@ -8,9 +8,9 @@
 </head>
 <body>
     <form action='funkcja.php' method='POST'>
-        <label for='find'>Wpisz znak lub ciąg znaków, który zawiera wyszukiwane słowa</label><br>
-        <input type='text' id='find' name='find'>
-        <label for='liczba'>Wpisz liczbę kolumn</label><br>
+        <label for='find'>Wpisz znak lub ciąg znaków, który zawiera wyszukiwane słowa</label><br><br>
+        <input type='text' id='find' name='find'><br><br>
+        <label for='liczba'>Wpisz liczbę kolumn</label><br><br>
         <input type='number' id='liczba' name='liczba'>
         <input type='submit'>
     </form>
