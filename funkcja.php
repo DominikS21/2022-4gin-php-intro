@@ -37,13 +37,14 @@ function renderHTMLTABLE($array) {
       $y++;
       if($y == $x) { echo '<tr></tr>'; }
     }
+    echo '</tr>';
   $i = $x;  
   foreach($result AS $k => $word) {
     if ($k < $x) continue;
     echo '<td>' .$word. '</td>'; 
     $i++;
     $col_to_add = $i % $x;
-    if($col_to_add == 1) { echo '<tr></tr>'; }
+    if($col_to_add == 0) { echo '<tr></tr>'; }
   }
   }
   echo '</table>';
