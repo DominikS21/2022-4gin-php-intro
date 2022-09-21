@@ -78,8 +78,8 @@ function renderCSV($array, $col_number, $find) {
   return $table;
 
 }
-echo renderCSV($array, 2, 'e');
-function renderMD($array, $x, $find) {
+//echo renderCSV($array, 4, 'a');
+function renderMD($array, $col_number, $find) {
   if("" == trim($find)){
     print_r($array);
   } else {
@@ -89,9 +89,49 @@ function renderMD($array, $x, $find) {
       }
     }
     natcasesort($array);
+  $table = '';
+  $y = $col_number;
+    foreach(array_slice($result, 0, $col_number) AS $word) {
+      $y++;
+      $col_to_add = $y % $col_number;
+      if (strlen($word)<30) { 
+        $liczba_do_dodania = 30 - strlen($word);
+        if($col_to_add == 0) { $table .= '|'.str_repeat('&nbsp;', $liczba_do_dodania) .$word.'|<br>'; }
+        else {
+          $table .= str_repeat('&nbsp;', $liczba_do_dodania).'|'.$word; 
+        }
+      }
+      else {
+        if($col_to_add == 0) { $table .='|'.$word.'|<br>'; }
+        else {
+          $table .= '|'.$word; 
+        }
+      }
+    }
+    $table .= "\n";
+  $i = $col_number;  
+  foreach($result AS $k => $word) {
+    if ($k < $col_number) continue;
+    $liczba_do_dodania = 30 - strlen($word);
+    $i++;
+    $col_to_add = $i % $col_number;
+    if (strlen($word)<=30) { 
+    if($col_to_add == 0) { 
+      $table .= $word."|<br>"; }
+      else {
+        $table .= '|'.$word. str_repeat('&nbsp;', $liczba_do_dodania); 
+      }
+    }
+    else {
+      if($col_to_add == 0) {
+      $table .= $word."|<br>"; }
+      else {
+        $table .= '|'.$word; 
+      }
+    }
+  }
+  }
+  return $table;
 }
-
-
-}
-//renderMD($array, $_POST['liczba'], $_POST['find']);
+echo renderMD($array, 4, 'a');
 ?>
