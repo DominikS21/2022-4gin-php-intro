@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-  tr, th, td {
-  border: 1px solid;
-}</style>
-</head>
-</html>
+
 <?php
 //$content = file_get_contents('http://loripsum.net/api');
 $content = 'Lorem ipsum dolor sit amet consectetur adipiscing elit Curabitur ac porttitor turpis a gravida mi Curabitur id dolor posuere scelerisque nibh a egestas erat Sed in laoreet enim Proin in consectetur nisl Aliquam dapibus orci id posuere malesuada augue nisi dapibus elit fermentum fringilla diam erat ac diam Donec ut scelerisque ante Sed nec ex sem Nulla facilisi Cras finibus sagittis sapien sed elementum Integer ut nisi lectus
@@ -70,7 +58,7 @@ function renderCSV($array, $col_number, $find) {
       $col_to_add = $y % $col_number;
       if($col_to_add == 0) { $table .= $word; }
       else {
-        $table .= $word. ','; 
+        $table .= $word. ';'; 
       }
     }
     $table .= "\n";
@@ -82,7 +70,7 @@ function renderCSV($array, $col_number, $find) {
     if($col_to_add == 0) { 
       $table .= $word."\n"; }
       else {
-        $table .= $word. ','; 
+        $table .= $word. ';'; 
       }
       
   }
