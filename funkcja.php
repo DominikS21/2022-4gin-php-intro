@@ -13,13 +13,13 @@
 </html>
 <?php
 //$content = file_get_contents('http://loripsum.net/api');
-$content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac porttitor turpis, a gravida mi. Curabitur id dolor posuere, scelerisque nibh a, egestas erat. Sed in laoreet enim. Proin in consectetur nisl. Aliquam dapibus, orci id posuere malesuada, augue nisi dapibus elit, fermentum fringilla diam erat ac diam. Donec ut scelerisque ante. Sed nec ex sem. Nulla facilisi. Cras finibus sagittis sapien sed elementum. Integer ut nisi lectus. 
+$content = 'Lorem ipsum dolor sit amet consectetur adipiscing elit Curabitur ac porttitor turpis a gravida mi Curabitur id dolor posuere scelerisque nibh a egestas erat Sed in laoreet enim Proin in consectetur nisl Aliquam dapibus orci id posuere malesuada augue nisi dapibus elit fermentum fringilla diam erat ac diam Donec ut scelerisque ante Sed nec ex sem Nulla facilisi Cras finibus sagittis sapien sed elementum Integer ut nisi lectus
 
-Donec bibendum nisl a orci fermentum, vitae blandit sapien pulvinar. Mauris vitae tellus sit amet ligula tristique facilisis non vel eros. Nunc aliquet ligula leo. Morbi blandit condimentum nibh nec egestas. Maecenas.';
+Donec bibendum nisl a orci fermentum, vitae blandit sapien pulvinar Mauris vitae tellus sit amet ligula tristique facilisis non vel eros Nunc aliquet ligula leo Morbi blandit condimentum nibh nec egestas Maecenas';
 $array = explode(' ',$content);
 natcasesort($array);
 
-function renderHTMLTABLE($array, $x, $find) {
+function renderHTMLTable($array, $col_number, $find) {
   if("" == trim($find)){
     print_r($array);
   } else {
@@ -29,27 +29,31 @@ function renderHTMLTABLE($array, $x, $find) {
       }
     }
     natcasesort($array);
-  echo '<table>';
-  $y = $x;
-    foreach(array_slice($result, 0, $x) AS $word) {
-      echo '<th>' .$word. '</th>'; 
+  $table = '';
+  $table .= '<table>';
+  $y = $col_number;
+    foreach(array_slice($result, 0, $col_number) AS $word) {
+      $table .= '<th>' .$word. '</th>'; 
       $y++;
-      if($y == $x) { echo '<tr></tr>'; }
+      if($y == $col_number) { $table .= '<tr></tr>'; }
     }
-    echo '</tr>';
-  $i = $x;  
+    $table .= '</tr>';
+  $i = $col_number;  
   foreach($result AS $k => $word) {
-    if ($k < $x) continue;
-    echo '<td>' .$word. '</td>'; 
+    if ($k < $col_number) continue;
+    $table .= '<td>' .$word. '</td>'; 
     $i++;
-    $col_to_add = $i % $x;
-    if($col_to_add == 0) { echo '<tr></tr>'; }
+    $col_to_add = $i % $col_number;
+    if($col_to_add == 0) { $table .= '<tr></tr>'; }
   }
   }
-  echo '</table>';
+  $table .= '</table>';
+  return $table;
 }
-//renderHTMLTABLE($array, $_POST['liczba'], $_POST['find'] );
-function renderCSV($array, $find) {
+//echo renderHTMLTable($array, $_POST['liczba'], $_POST['find'] );
+
+
+function renderCSV($array, $col_number, $find) {
   if("" == trim($find)){
     print_r($array);
   } else {
@@ -59,18 +63,34 @@ function renderCSV($array, $find) {
       }
     }
     natcasesort($array);
-    $file = fopen('php://temp', 'w+');
-    fputcsv($file, $result);
-    rewind($file);
-    while (!feof($file)) {
-    $data_read = fread($file, 8192); // will return a string of all data separeted by commas.
-}
-    fclose($file);
-    echo $data_read;
-}
+  $table = '';
+  $y = $col_number;
+    foreach(array_slice($result, 0, $col_number) AS $word) {
+      $y++;
+      $col_to_add = $y % $col_number;
+      if($col_to_add == 0) { $table .= $word; }
+      else {
+        $table .= $word. ','; 
+      }
+    }
+    $table .= "\n";
+  $i = $col_number;  
+  foreach($result AS $k => $word) {
+    if ($k < $col_number) continue;
+    $i++;
+    $col_to_add = $i % $col_number;
+    if($col_to_add == 0) { 
+      $table .= $word."\n"; }
+      else {
+        $table .= $word. ','; 
+      }
+      
+  }
+  }
+  return $table;
 
 }
-//renderCSV($array, $_POST['find']);
+echo renderCSV($array, 2, 'e');
 function renderMD($array, $x, $find) {
   if("" == trim($find)){
     print_r($array);
@@ -85,5 +105,5 @@ function renderMD($array, $x, $find) {
 
 
 }
-renderMD($array, $_POST['liczba'], $_POST['find']);
+//renderMD($array, $_POST['liczba'], $_POST['find']);
 ?>
