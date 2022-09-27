@@ -5,8 +5,7 @@ $content = 'Lorem ipsum dolor sit amet consectetur adipiscing elit Curabitur ac 
 donec bibendum nisl a orci fermentum, vitae blandit sapien pulvinar Mauris vitae tellus sit amet ligula tristique facilisis non vel eros Nunc aliquet ligula leo Morbi blandit condimentum nibh nec egestas Maecenas';
 $array = explode(' ',$content);
 natcasesort($array);
-
-function renderHTMLTable($array, $col_number, $find) {
+function SortSearch($array, $find) {
   if("" == trim($find)){
     print_r($array);
   } else {
@@ -16,6 +15,11 @@ function renderHTMLTable($array, $col_number, $find) {
       }
     }
     natcasesort($array);
+    return $result;
+}
+}
+function renderHTMLTable($array, $find, $col_number) {
+  $result = SortSearch($array, $find);
   $table = '';
   $table .= '<table>';
   $y = $col_number;
@@ -33,23 +37,14 @@ function renderHTMLTable($array, $col_number, $find) {
     $col_to_add = $i % $col_number;
     if($col_to_add == 0) { $table .= '<tr></tr>'; }
   }
-  }
   $table .= '</table>';
   return $table;
 }
-//echo renderHTMLTable($array, $_POST['liczba'], $_POST['find'] );
+//echo renderHTMLTable($array, 'e', 5 );
 
 
 function renderCSV($array, $col_number, $find) {
-  if("" == trim($find)){
-    print_r($array);
-  } else {
-    foreach($array as $word){
-      if( strpos($word, $find) !== false){
-          $result[] = $word;
-      }
-    }
-    natcasesort($array);
+  $result = SortSearch($array, $find);
   $table = '';
   $y = $col_number;
     foreach(array_slice($result, 0, $col_number) AS $word) {
@@ -73,22 +68,14 @@ function renderCSV($array, $col_number, $find) {
       }
       
   }
-  }
   return $table;
 
 }
+
 //echo renderCSV($array, 4, 'a');
 function renderMD($array, $col_number, $find) {
   $szerokosc_tabeli = 50;
-  if("" == trim($find)){
-    print_r($array);
-  } else {
-    foreach($array as $word){
-      if( strpos($word, $find) !== false){
-          $result[] = $word;
-      }
-    }
-    natcasesort($array);
+  $result = SortSearch($array, $find);
   $table = '';
   $y = $col_number;
     foreach(array_slice($result, 0, $col_number) AS $word) {
@@ -129,7 +116,6 @@ function renderMD($array, $col_number, $find) {
         $table .= '|'.$word; 
       }
     }
-  }
   }
   return $table;
 }
