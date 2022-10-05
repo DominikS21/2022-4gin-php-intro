@@ -7,7 +7,7 @@ https://learnxinyminutes.com/docs/php/
 ## Zadanie 1
 
 1. wygeneruj tekst Lorem ipsum (możesz skorzystać ze strony internetowej i ręcznie skopiować wynik do zmiennej) - tekst ma mieć co najmniej 100 słów
-1. napisz skrypct php, który pobrany tekst wrzuca do tablicy (array) - każde słowo to ma być kolejny element tablicy
+1. napisz skrypt php, który pobrany tekst wrzuca do tablicy (array) - każde słowo to ma być kolejny element tablicy
 1. wyświetl na ekranie zawartość tablicy
 
 
