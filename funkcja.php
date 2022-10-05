@@ -7,7 +7,10 @@ $array = explode(' ',$content);
 natcasesort($array);
 function SortSearch($array, $find) {
   if("" == trim($find)){
-    print_r($array);
+    foreach($array as $word){
+          $result[] = $word;
+    }
+    return $result;
   } else {
     foreach($array as $word){
       if( strpos($word, $find) !== false){
@@ -18,49 +21,50 @@ function SortSearch($array, $find) {
     return $result;
 }
 }
-function renderHTMLTable($array, $find, $col_number) {
+function renderHTMLTable($array, $cols, $find) {
   $result = SortSearch($array, $find);
+  print_r( $result);
   $table = '';
   $table .= '<table>';
-  $y = $col_number;
-    foreach(array_slice($result, 0, $col_number) AS $word) {
+  $y = $cols;
+    foreach(array_slice($result, 0, $cols) AS $word) {
       $table .= '<th>' .$word. '</th>'; 
       $y++;
-      if($y == $col_number) { $table .= '<tr></tr>'; }
+      if($y == $cols) { $table .= '<tr></tr>'; }
     }
     $table .= '</tr>';
-  $i = $col_number;  
+  $i = $cols;  
   foreach($result AS $k => $word) {
-    if ($k < $col_number) continue;
+    if ($k < $cols) continue;
     $table .= '<td>' .$word. '</td>'; 
     $i++;
-    $col_to_add = $i % $col_number;
+    $col_to_add = $i % $cols;
     if($col_to_add == 0) { $table .= '<tr></tr>'; }
   }
   $table .= '</table>';
   return $table;
 }
-//echo renderHTMLTable($array, 'e', 5 );
+echo renderHTMLTable($array, 5, '' );
 
 
-function renderCSV($array, $col_number, $find) {
+function renderCSV($array, $cols, $find) {
   $result = SortSearch($array, $find);
   $table = '';
-  $y = $col_number;
-    foreach(array_slice($result, 0, $col_number) AS $word) {
+  $y = $cols;
+    foreach(array_slice($result, 0, $cols) AS $word) {
       $y++;
-      $col_to_add = $y % $col_number;
+      $col_to_add = $y % $cols;
       if($col_to_add == 0) { $table .= $word; }
       else {
         $table .= $word. ';'; 
       }
     }
     $table .= "\n";
-  $i = $col_number;  
+  $i = $cols;  
   foreach($result AS $k => $word) {
-    if ($k < $col_number) continue;
+    if ($k < $cols) continue;
     $i++;
-    $col_to_add = $i % $col_number;
+    $col_to_add = $i % $cols;
     if($col_to_add == 0) { 
       $table .= $word."\n"; }
       else {
@@ -73,17 +77,17 @@ function renderCSV($array, $col_number, $find) {
 }
 
 //echo renderCSV($array, 4, 'a');
-function renderMD($array, $col_number, $find) {
+function renderMD($array, $cols, $find) {
   $szerokosc_tabeli = 50;
   $result = SortSearch($array, $find);
   $table = '';
-  $y = $col_number;
-    foreach(array_slice($result, 0, $col_number) AS $word) {
+  $y = $cols;
+    foreach(array_slice($result, 0, $cols) AS $word) {
       $y++;
-      $col_to_add = $y % $col_number;
+      $col_to_add = $y % $cols;
       if (strlen($word)<  $szerokosc_tabeli) { 
         $liczba_do_dodania = $szerokosc_tabeli - strlen($word);
-        if($col_to_add == 0) { $table .= '|'.$word.str_repeat(' ', $liczba_do_dodania).'|' ."\n".str_repeat('-', $szerokosc_tabeli * $col_number + $col_number); }
+        if($col_to_add == 0) { $table .= '|'.$word.str_repeat(' ', $liczba_do_dodania).'|' ."\n".str_repeat('-', $szerokosc_tabeli * $cols + $cols); }
         else {
           $table .= '|'.$word.str_repeat(' ', $liczba_do_dodania); 
         }
@@ -96,12 +100,12 @@ function renderMD($array, $col_number, $find) {
       }
     }
     $table .= "\n";
-  $i = $col_number;  
+  $i = $cols;  
   foreach($result AS $k => $word) {
-    if ($k < $col_number) continue;
+    if ($k < $cols) continue;
     $liczba_do_dodania = $szerokosc_tabeli - strlen($word);
     $i++;
-    $col_to_add = $i % $col_number;
+    $col_to_add = $i % $cols;
     if (strlen($word)<$szerokosc_tabeli) { 
     if($col_to_add == 0) { 
       $table .= '|'.$word.str_repeat(' ', $liczba_do_dodania ).'|'."\n"; }
@@ -119,5 +123,5 @@ function renderMD($array, $col_number, $find) {
   }
   return $table;
 }
-echo renderMD($array, 4, 'a');
+//echo renderMD($array, 4, 'a');
 ?>
