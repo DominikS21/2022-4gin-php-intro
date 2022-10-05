@@ -75,7 +75,7 @@ class tableTool implements tableToolInterface{
       }
       
       public function renderMD($cols, $filterString='') {
-        $szerokosc_tabeli = 50;
+        $szerokosc_tabeli = 20;
         $result = $this->SortSearch($filterString);
         $table = '';
         $y = $cols;
